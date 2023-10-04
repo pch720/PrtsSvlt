@@ -1,12 +1,15 @@
 <script>
-    window.onload = function () { openCalendar(); }
+    import { onMount } from 'svelte' // 컴포넌트가 실행될 때 호출되는 함수
+    onMount(() => {
+        buildCalendar();
+    })
 
     let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
     let today = new Date();     // 페이지를 로드한 날짜를 저장
     today.setHours(0,0,0,0);    // 비교 편의를 위해 today의 시간을 초기화
 
     // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
-    function openCalendar() {
+    function buildCalendar() {
 
         let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
         let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
@@ -83,10 +86,6 @@
     }
 </script>
 
-
-<div>
-    Todo Calender~!!
-</div>
 <body>
 <table class="Calendar">
     <thead>
