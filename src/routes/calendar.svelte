@@ -7,6 +7,8 @@
     let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
     let today = new Date();     // 페이지를 로드한 날짜를 저장
     today.setHours(0,0,0,0);    // 비교 편의를 위해 today의 시간을 초기화
+    let calYear = "";
+    let calMonth = "";
 
     // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
     function buildCalendar() {
@@ -15,8 +17,8 @@
         let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
 
         let tbody_Calendar = document.querySelector(".Calendar > tbody");
-        document.getElementById("calYear").innerText = nowMonth.getFullYear().toString();   // 연도 숫자 갱신
-        document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
+        calYear = nowMonth.getFullYear().toString();   // 연도 숫자 갱신
+        calMonth = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
 
         while (tbody_Calendar.rows.length > 0) {                        // 이전 출력결과가 남아있는 경우 초기화
             tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
@@ -92,8 +94,8 @@
     <tr>
         <td on:click={prevCalendar} style="cursor:pointer;">&#60;</td>
         <td colspan="5">
-            <span id="calYear"></span>년
-            <span id="calMonth"></span>월
+            <span>{calYear}</span>년
+            <span>{calMonth}</span>월
         </td>
         <td on:click={nextCalendar} style="cursor:pointer;">&#62;</td>
     </tr>
