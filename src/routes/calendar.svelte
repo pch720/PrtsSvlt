@@ -36,10 +36,10 @@
             nowColumn.innerText = leftPad(nowDay.getDate());      // 추가한 열에 날짜 입력
 
 
-            if (nowDay.getDay() == 0) {                 // 일요일인 경우 글자색 빨강으로
+            if (nowDay.getDay() === 0) {                 // 일요일인 경우 글자색 빨강으로
                 nowColumn.style.color = "#DC143C";
             }
-            if (nowDay.getDay() == 6) {                 // 토요일인 경우 글자색 파랑으로 하고
+            if (nowDay.getDay() === 6) {                 // 토요일인 경우 글자색 파랑으로 하고
                 nowColumn.style.color = "#0000CD";
                 nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
             }
@@ -48,7 +48,7 @@
             if (nowDay < today) {                       // 지난날인 경우
                 nowColumn.className = "pastDay";
             }
-            else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우
+            else if (nowDay.getFullYear() === today.getFullYear() && nowDay.getMonth() === today.getMonth() && nowDay.getDate() === today.getDate()) { // 오늘인 경우
                 nowColumn.className = "today";
                 nowColumn.onclick = function () { choiceDate(this); }
             }
