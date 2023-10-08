@@ -17,8 +17,8 @@
 			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
 				<a href="/about">글목록</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/Todo' ? 'page' : undefined}>
-				<a href="/Todo">Todo</a>
+			<li aria-current={$page.url.pathname === '/todo' ? 'page' : undefined}>
+				<a href="/todo">Todo</a>
 			</li>
 			<li aria-current={$page.url.pathname === '/tab3' ? 'page' : undefined}>
 				<a href="/tab3">커뮤니티</a>
