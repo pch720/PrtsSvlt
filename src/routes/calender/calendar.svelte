@@ -71,22 +71,27 @@ console.log("현재 날짜 : "+nowMonth)
     </div>
     <div>
         {#each days as day}
-            <span>{day}</span>
+            <div class="cal-cell">{day}</div>
         {/each}
     </div>
     <div>
         {#each thisMonCal as date, i}
             {#if i%7 === 6 && date}
-                <button style="color: blue">{date}</button>
+                <div style="color: blue" class="cal-cell-b">{date}</div>
                 <br/>
-            {:else if i%7 === 0} <button style="color: red">{date}</button>
-            {:else} <button>{date}</button>
+            {:else if i%7 === 0} <div style="color: red" class="cal-cell">{date}</div>
+            {:else} <div class="cal-cell">{date}</div>
             {/if}
         {/each}
     </div>
 </body>
 <style>
-    div span{
-        width: 10rem;
+    .cal-cell{
+        display: inline-flex;
+        width: 2rem;
+        height: 2rem;
+        :is(b) {
+
+        }
     }
 </style>
