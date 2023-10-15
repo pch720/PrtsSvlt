@@ -12,16 +12,28 @@
     let calYear = "";
     let calMonth = "";
     let thisMonCal = [""];
-    // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
+
+    let targetCalCell = document.querySelectorAll('.cal-cell');
+    targetCalCell.forEach((target) => target.addEventListener("click", function(){
+        console.log(targetCalCell.values());
+        })
+    );
+
+
+
+
+
     function buildCalendar() {
-console.log("현재 날짜 : "+nowMonth)
         let strDay = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
         let finDay = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
         thisMonCal = [];  // 현재 선택된 달 요소 초기화
         for (let i = 0 ; i < strDay.getDay() ; i++)
-            thisMonCal.push("");
+            thisMonCal.push("\u00A0");
         for (let i = strDay.getDate(); i < finDay.getDate()+1 ; i++)
             thisMonCal.push(i.toString());
+        if (thisMonCal.length %7 !== 0 )
+            for (let i = thisMonCal.length % 7 ; i<7 ; i++)
+                thisMonCal.push("\u00A0");
         console.log(thisMonCal)
 
         calYear = nowMonth.getFullYear().toString();   // 연도 숫자 갱신
@@ -63,35 +75,42 @@ console.log("현재 날짜 : "+nowMonth)
 </script>
 
 <body>
-    <div>
+    <div class="cal-row">
         <button on:click={prevCalendar}>&#60;</button>
         <span>{calYear}</span>년
         <span>{calMonth}</span>월
         <button on:click={nextCalendar}>&#62;</button>
     </div>
-    <div>
+    <div class="cal-row">
         {#each days as day}
             <div class="cal-cell">{day}</div>
         {/each}
     </div>
-    <div>
+    <div class="cal-row">
         {#each thisMonCal as date, i}
             {#if i%7 === 6 && date}
-                <div style="color: blue" class="cal-cell-b">{date}</div>
-                <br/>
-            {:else if i%7 === 0} <div style="color: red" class="cal-cell">{date}</div>
+                <div class="cal-cell blue">{date}</div><br/>
+            {:else if i%7 === 0} <div class="cal-cell red">{date}</div>
             {:else} <div class="cal-cell">{date}</div>
             {/if}
         {/each}
     </div>
 </body>
 <style>
+    .cal-row{
+        text-align: center;
+    }
     .cal-cell{
         display: inline-flex;
-        width: 2rem;
-        height: 2rem;
-        :is(b) {
-
-        }
+        width: 8rem;
+        height: 6rem;
+        background-color: cornflowerblue;
+        border: 1px solid white;
+    }
+    .red{
+        color: red;
+    }
+    .blue{
+        color: blue;
     }
 </style>
