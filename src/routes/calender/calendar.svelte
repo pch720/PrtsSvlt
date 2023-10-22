@@ -1,10 +1,13 @@
-<script>
-    import { onMount } from 'svelte' // 컴포넌트가 실행될 때 호출되는 함수
+<script lang="ts">
+    import { onMount } from 'svelte'
+    import {DAYS, getDays} from "$lib/constant/days.constant";
+    import DragDrop from "./dragDrop.svelte";
+    // 컴포넌트가 실행될 때 호출되는 함수
     onMount(() => {
         buildCalendar();
     })
 
-    const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const days = getDays();
 
     let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
     let today = new Date();     // 페이지를 로드한 날짜를 저장
@@ -19,10 +22,6 @@
         })
     );
 
-
-
-
-
     function buildCalendar() {
         let strDay = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
         let finDay = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
@@ -34,34 +33,15 @@
         if (thisMonCal.length %7 !== 0 )
             for (let i = thisMonCal.length % 7 ; i<7 ; i++)
                 thisMonCal.push("\u00A0");
-        console.log(thisMonCal)
 
         calYear = nowMonth.getFullYear().toString();   // 연도 숫자 갱신
         calMonth = nowMonth.getMonth() <9 ? "0" + (nowMonth.getMonth() + 1) : (nowMonth.getMonth() + 1).toString(); // 월 숫자 갱신
-
-
-            // if (nowDay < today) {                       // 지난날인 경우
-            //     nowColumn.className = "pasdivay";
-            // }
-            // else if (nowDay.getFullYear() === today.getFullYear() && nowDay.getMonth() === today.getMonth() && nowDay.gedivate() === today.gedivate()) { // 오늘인 경우
-            //     nowColumn.className = "today";
-            //     nowColumn.onclick = function () { choiceDate(this); }
-            // }
-            // else {                                      // 미래인 경우
-            //     nowColumn.className = "futureDay";
-            //     nowColumn.onclick = function () { choiceDate(this); }
-            // }
-        //}
     }
 
     // 날짜 선택
-    function choiceDate(nowColumn) {
-        if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
-            document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
-        }
-        nowColumn.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
+    function selectDay(day: string){
+        alert(calYear+"년 "+calMonth+"월 "+day+"일");
     }
-
     // 이전달 버튼 클릭
     function prevCalendar() {
         nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1);   // 현재 달을 1 감소
@@ -71,6 +51,11 @@
     function nextCalendar() {
         nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1);   // 현재 달을 1 증가
         buildCalendar();    // 달력 다시 생성
+    }
+
+    function getColor(idx: number) {
+        if(idx % 7 === 6) return "blue ";
+        else if (idx % 7 === 0) return "red ";
     }
 </script>
 
@@ -88,11 +73,12 @@
     </div>
     <div class="cal-row">
         {#each thisMonCal as date, i}
-            {#if i%7 === 6 && date}
-                <div class="cal-cell blue">{date}</div><br/>
-            {:else if i%7 === 0} <div class="cal-cell red">{date}</div>
-            {:else} <div class="cal-cell">{date}</div>
-            {/if}
+            <div
+                    on:click={() => { selectDay(date) }}
+                    class={`cal-cell ${getColor(i)}`}
+            >
+                {date}
+            </div>
         {/each}
     </div>
 </body>
