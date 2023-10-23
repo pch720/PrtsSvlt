@@ -57,6 +57,13 @@
         if(idx % 7 === 6) return "blue ";
         else if (idx % 7 === 0) return "red ";
     }
+    //드래그 앤 드롭 관련 함수!
+    function  dStrart(day : String) {
+        console.log(day + "일 부터");
+    }
+    function  dEnd(day : String) {
+        console.log(day + "일 까지");
+    }
 </script>
 
 <body>
@@ -74,13 +81,17 @@
     <div class="cal-row">
         {#each thisMonCal as date, i}
             <div
-                    on:click={() => { selectDay(date) }}
+                    on:click = {() => { selectDay(date) }}
+                    on:dragstart = {() => { dStrart(date) }}
+                    on:dragend = {() => {dEnd(date)}}
+                    draggable="true"
                     class={`cal-cell ${getColor(i)}`}
             >
                 {date}
             </div>
         {/each}
     </div>
+<DragDrop/>
 </body>
 <style>
     .cal-row{
